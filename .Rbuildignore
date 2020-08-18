@@ -1,4 +1,4 @@
 ^pkgbump\.code-workspace$
 ^dev$
-^\.pkgbump\.json$
 ^\.github$
+^\.pkgbump\.json$

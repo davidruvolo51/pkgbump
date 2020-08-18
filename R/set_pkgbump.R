@@ -41,6 +41,23 @@ set_pkgbump <- function(files, patterns = NULL) {
         config$files <- files
     }
 
+    # append to buildignore if present
+    if (file.exists(".Rbuildignore")) {
+        r <- readLines(".Rbuildignore", warn = FALSE)
+        if (length(r[r == "^\\.pkgbump\\.json$"]) == 0) {
+            r <- c(r, "^\\.pkgbump\\.json$")
+            write(
+                x = r,
+                file = ".Rbuildignore",
+                sep = "\n"
+            )
+            cli::cli_alert_success(
+                text = "Adding '.pkgbump.json' to '.Rbuildignore'"
+            )
+        }
+    }
+
+
     # append patterns
     if (!is.null(patterns)) {
         stopifnot(
@@ -50,6 +67,7 @@ set_pkgbump <- function(files, patterns = NULL) {
         config$patterns <- patterns
     }
 
+    # set defaults
     if (is.null(patterns)) {
         config$patterns <- list(
             R = "version = | version=",
@@ -58,15 +76,11 @@ set_pkgbump <- function(files, patterns = NULL) {
     }
 
     # save and confirm
-    tryCatch({
-        jsonlite::write_json(
-            x = config,
-            path = file,
-            pretty = TRUE,
-            auto_unbox = TRUE
-        )
-        cli::cli_alert_success(paste0("Saved '", file, "'"))
-    }, error = function(e) {
-        cli::cli_alert_warning(paste0("Unable to update '", file, "'"))
-    })
+    jsonlite::write_json(
+        x = config,
+        path = file,
+        pretty = TRUE,
+        auto_unbox = TRUE
+    )
+    cli::cli_alert_success(paste0("Saved '", file, "'"))
 }

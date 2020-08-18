@@ -1,6 +1,6 @@
 Package: pkgbump
 Title: Increment version numbers in package files
-Version: 0.0.1
+Version: 0.0.11
 Authors@R: 
     person(given = "David",
            family = "Ruvolo",

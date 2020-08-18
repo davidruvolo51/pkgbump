@@ -40,4 +40,4 @@ set_pkgbump(
 )
 
 # set version number
-pkgbump(version = "0.0.1")
+pkgbump(version = "0.0.11")

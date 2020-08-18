@@ -5,14 +5,14 @@
 #' MODIFIED: 2020-08-18
 #' PURPOSE: package management
 #' STATUS: ongoing
-#' PACKAGES: usethis
+#' PACKAGES: usethis; devtools
 #' COMMENTS: NA
 #'////////////////////////////////////////////////////////////////////////////
 
 # init
-usethis::use_description()
-usethis::use_namespace()
-usethis::use_github_action_check_standard()
+#' usethis::use_description()
+#' usethis::use_namespace()
+#' usethis::use_github_action_check_standard()
 
 # ignore
 usethis::use_build_ignore(

@@ -17,3 +17,9 @@ the argument \code{patterns} to define custom search patterns. Files that are
 supported by this package are .json, .R, and R package files (i.e.,
 DESCRIPTION).
 }
+\examples{
+\dontrun{
+  set_pkgbump(files = c("package.json", "DESCRIPTION"))
+}
+
+}

@@ -24,3 +24,9 @@ which files should be mananaged by pkgbump.
 The available optional argument is \code{leftpad}. When used, this will add a
 specific number of blank spaces to when writing R files. Default is 8.
 }
+\examples{
+\dontrun{
+  pkgbump(version = "1.0.0")
+}
+
+}

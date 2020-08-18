@@ -8,6 +8,11 @@
 #' @param files an array of full file paths
 #' @param patterns define your own search patterns
 #'
+#' @examples
+#' \dontrun{
+#'   set_pkgbump(files = c("package.json", "DESCRIPTION"))
+#' }
+#'
 #' @export
 set_pkgbump <- function(files, patterns = NULL) {
 

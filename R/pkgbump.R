@@ -13,6 +13,11 @@
 #'
 #' @return Update package version number in tracked files
 #'
+#' @examples
+#' \dontrun{
+#'   pkgbump(version = "1.0.0")
+#' }
+#'
 #' @export
 pkgbump <- function(version, ...) {
     .validate__file(".pkgbump.json")

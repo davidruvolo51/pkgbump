@@ -1,3 +1,7 @@
+<!-- badges: start -->
+![R-CMD-check](https://github.com/davidruvolo51/pkgbump/workflows/R-CMD-check/badge.svg?branch=prod)
+<!-- badges: end -->
+
 # pkgbump
 
 A quick and dirty way to update a package's version number during package development.

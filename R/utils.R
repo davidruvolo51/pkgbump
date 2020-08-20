@@ -81,18 +81,20 @@
 #'
 #' @param path location of file
 #' @param version version number to write
-#' @param leftpad amount of spacing to add
 #' @param patterns search patterns
 #'
 #' @noRd
-.write__r <- function(path, version, leftpad = 8, patterns) {
+.write__r <- function(path, version, patterns) {
     .validate__file(path)
 
     r <- readLines(path, warn = FALSE)
-    r[grepl(pattern = patterns, x = r)] <- paste0(
-        paste0(rep(" ", leftpad), collapse = ""),
-        "version = \"", version, "\","
-    )
+    r <- sapply(seq_len(length(r)), function(l) {
+        stringr::str_replace_all(
+            string = r[l],
+            pattern = patterns,
+            replacement = paste0("version = \"", version, "\"")
+        )
+    })
 
     # save and confirm
     writeLines(r, path)

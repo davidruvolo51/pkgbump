@@ -1,6 +1,6 @@
 Package: pkgbump
 Title: Increment version numbers in package files
-Version: 0.0.11
+Version: 0.0.12
 Authors@R: 
     person(given = "David",
            family = "Ruvolo",
@@ -15,4 +15,5 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
 Imports: 
     cli,
-    jsonlite
+    jsonlite,
+    stringr

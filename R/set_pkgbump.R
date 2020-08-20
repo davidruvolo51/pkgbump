@@ -58,21 +58,17 @@ set_pkgbump <- function(files, patterns = NULL) {
     }
 
 
-    # append patterns
+    # set patterns (either default or user specified)
+    config$patterns <- list(
+        R = "version = .\\d+.\\d+.\\d+.|version=.\\d+.\\d+.\\d+.",
+        DESCRIPTION = "Version:"
+    )
     if (!is.null(patterns)) {
         stopifnot(
             "input for 'patterns' must have the names 'R' or 'DESCRIPTION'" =
             names(patterns) %in% c("R", "desc")
         )
         config$patterns <- patterns
-    }
-
-    # set defaults
-    if (is.null(patterns)) {
-        config$patterns <- list(
-            R = "version = | version=",
-            DESCRIPTION = "Version:"
-        )
     }
 
     # save and confirm

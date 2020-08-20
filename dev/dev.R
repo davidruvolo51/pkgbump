@@ -2,7 +2,7 @@
 #' FILE: dev.R
 #' AUTHOR: David Ruvolo
 #' CREATED: 2020-08-17
-#' MODIFIED: 2020-08-18
+#' MODIFIED: 2020-08-20
 #' PURPOSE: package management
 #' STATUS: ongoing
 #' PACKAGES: usethis; devtools
@@ -26,6 +26,7 @@ usethis::use_build_ignore(
 # pkgs
 usethis::use_package("cli")
 usethis::use_package("jsonlite")
+usethis::use_package("stringr")
 
 # prep
 devtools::check_man()
@@ -35,9 +36,10 @@ devtools::check()
 devtools::load_all()
 set_pkgbump(
     files = c(
-        "DESCRIPTION"
+        "DESCRIPTION",     # manage DESCRIPTION file
+        "dev/test_file.R"  # this file is for testing purposes only
     )
 )
 
 # set version number
-pkgbump(version = "0.0.11")
+pkgbump(version = "0.0.12")

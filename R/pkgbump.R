@@ -5,11 +5,7 @@
 #' package.json, and use_*.R files. Use the function `set_pkgbump` to define
 #' which files should be mananaged by pkgbump.
 #'
-#' The available optional argument is `leftpad`. When used, this will add a
-#' specific number of blank spaces to when writing R files. Default is 8.
-#'
 #' @param version version number to write
-#' @param ... optional arguments for processing (see description)
 #'
 #' @return Update package version number in tracked files
 #'
@@ -19,15 +15,8 @@
 #' }
 #'
 #' @export
-pkgbump <- function(version, ...) {
+pkgbump <- function(version) {
     .validate__file(".pkgbump.json")
-
-    args <- .named_attribs_only(...)
-
-    # substitue leftpad default
-    if (is.null(args$leftpad)) {
-        args$leftpad <- 8
-    }
 
     # set default files
     d <- jsonlite::read_json(".pkgbump.json")
@@ -48,7 +37,6 @@ pkgbump <- function(version, ...) {
             .write__r(
                 path = d$files[i],
                 version = version,
-                leftpad = args$leftpad,
                 patterns = d$patterns$R
             )
         }

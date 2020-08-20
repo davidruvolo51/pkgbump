@@ -4,12 +4,10 @@
 \alias{pkgbump}
 \title{Update Package Version Number}
 \usage{
-pkgbump(version, ...)
+pkgbump(version)
 }
 \arguments{
 \item{version}{version number to write}
-
-\item{...}{optional arguments for processing (see description)}
 }
 \value{
 Update package version number in tracked files
@@ -19,10 +17,6 @@ Auto-increment package version number for across tracked package files.
 This was originally intented to update version numbers in the DESCRIPTION,
 package.json, and use_*.R files. Use the function \code{set_pkgbump} to define
 which files should be mananaged by pkgbump.
-}
-\details{
-The available optional argument is \code{leftpad}. When used, this will add a
-specific number of blank spaces to when writing R files. Default is 8.
 }
 \examples{
 \dontrun{

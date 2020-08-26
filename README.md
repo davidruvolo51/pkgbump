@@ -1,3 +1,7 @@
+<!-- badges: start --->
+![version](https://img.shields.io/github/package-json/v/davidruvolo51/pkgbump/prod)
+<!-- badges: end --->
+
 # pkgbump
 
 A quick and dirty way to update a package's version number during package development.

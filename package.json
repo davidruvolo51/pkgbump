@@ -1,0 +1,21 @@
+{
+  "name": "pkgbump",
+  "version": "0.0.12",
+  "main": "index.js",
+  "author": "davidruvolo51",
+  "description": "automate R package version number updating",
+  "license": "MIT",
+  "homepage": "https://github.com/davidruvolo51/pkgbump",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/davidruvolo51/pkgbump.git"
+  },
+  "bugs": {
+    "url": "https://github.com/davidruvolo51/pkgbump/issues"
+  },
+  "keywords": [
+    "r",
+    "r-package-development",
+    "version-control"
+  ]
+}

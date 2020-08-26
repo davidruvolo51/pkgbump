@@ -1,8 +1,8 @@
 {
   "name": "pkgbump.config",
-  "updated": "2020-08-20 13:47:19",
-  "n": 2,
-  "files": ["DESCRIPTION", "dev/test_file.R"],
+  "updated": "2020-08-26 21:15:03",
+  "n": 3,
+  "files": ["DESCRIPTION", "package.json", "dev/test_file.R"],
   "patterns": {
     "R": "version = .\\d+.\\d+.\\d+.|version=.\\d+.\\d+.\\d+.",
     "DESCRIPTION": "Version:"

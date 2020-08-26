@@ -2,10 +2,10 @@
 #' FILE: dev.R
 #' AUTHOR: David Ruvolo
 #' CREATED: 2020-08-17
-#' MODIFIED: 2020-08-20
+#' MODIFIED: 2020-08-26
 #' PURPOSE: package management
 #' STATUS: ongoing
-#' PACKAGES: usethis; devtools
+#' PACKAGES: usethis; devtools; pkgbump
 #' COMMENTS: NA
 #'////////////////////////////////////////////////////////////////////////////
 
@@ -37,6 +37,7 @@ devtools::load_all()
 set_pkgbump(
     files = c(
         "DESCRIPTION",     # manage DESCRIPTION file
+        "package.json",    # useful for shields.io
         "dev/test_file.R"  # this file is for testing purposes only
     )
 )

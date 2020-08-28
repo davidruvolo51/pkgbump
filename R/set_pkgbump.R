@@ -6,7 +6,8 @@
 #' DESCRIPTION).
 #'
 #' @param files an array of full file paths
-#' @param patterns define your own search patterns
+#' @param r_patterns a string containing search patterns for R files
+#'
 #'
 #' @examples
 #' \dontrun{
@@ -14,15 +15,18 @@
 #' }
 #'
 #' @export
-set_pkgbump <- function(files, patterns = NULL) {
+set_pkgbump <- function(files, r_patterns = NULL) {
 
-    file <- ".pkgbump.json"
-    status <- file.exists(file)
+    # when config exists
+    if (file.exists(".pkgbump.json")) {
+        config <- jsonlite::read_json(".pkgbump.json")
+        config$updated <- Sys.time()
+        config$n <- length(files)
+        config$files <- files
+    } else {
 
-    # if config does not exist
-    if (!status) {
-        cli::cli_alert_success(paste0("Creating '", file, "'"))
-        file.create(file)
+        cli::cli_alert_success("Created config file '.pkgbump.json'")
+        file.create(".pkgbump.json")
 
         # create json
         config <- list(
@@ -33,28 +37,9 @@ set_pkgbump <- function(files, patterns = NULL) {
         )
     }
 
-    # when config exists
-    if (status) {
-        config <- jsonlite::read_json(file)
-        config$updated <- Sys.time()
-        config$n <- length(files)
-        config$files <- files
-    }
-
     # append to buildignore if present
     if (file.exists(".Rbuildignore")) {
-        r <- readLines(".Rbuildignore", warn = FALSE)
-        if (length(r[r == "^\\.pkgbump\\.json$"]) == 0) {
-            r <- c(r, "^\\.pkgbump\\.json$")
-            write(
-                x = r,
-                file = ".Rbuildignore",
-                sep = "\n"
-            )
-            cli::cli_alert_success(
-                text = "Adding '.pkgbump.json' to '.Rbuildignore'"
-            )
-        }
+        .append__rbuild(pattern = "^\\.pkgbump\\.json$")
     }
 
 
@@ -63,20 +48,26 @@ set_pkgbump <- function(files, patterns = NULL) {
         R = "version = .\\d+.\\d+.\\d+.|version=.\\d+.\\d+.\\d+.",
         DESCRIPTION = "Version:"
     )
-    if (!is.null(patterns)) {
-        stopifnot(
-            "input for 'patterns' must have the names 'R' or 'DESCRIPTION'" =
-            names(patterns) %in% c("R", "desc")
-        )
-        config$patterns <- patterns
+    if (!is.null(r_patterns)) {
+        if (!is.character(r_patterns)) {
+            cli::cli_alert_danger(
+                "R patterns must be a string"
+            )
+        } else if (length(r_patterns) > 1) {
+            cli::cli_alert_danger(
+                "More than 1 R pattern entered. Input should be a string"
+            )
+        } else {
+            config$patterns$R <- r_patterns
+        }
     }
 
     # save and confirm
     jsonlite::write_json(
         x = config,
-        path = file,
+        path = ".pkgbump.json",
         pretty = TRUE,
         auto_unbox = TRUE
     )
-    cli::cli_alert_success(paste0("Saved '", file, "'"))
+    cli::cli_alert_success("Saved '.pkgbump.json'")
 }

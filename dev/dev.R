@@ -33,7 +33,9 @@ devtools::check_man()
 devtools::check()
 
 # use pkgbump to manage pkg's version numbers
+detach("package:pkgbump")
 devtools::load_all()
+
 set_pkgbump(
     files = c(
         "DESCRIPTION",     # manage DESCRIPTION file
@@ -43,4 +45,4 @@ set_pkgbump(
 )
 
 # set version number
-pkgbump(version = "0.0.12")
+pkgbump(version = "0.0.13")

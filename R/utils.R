@@ -1,26 +1,22 @@
-#' Named Attributes Only
+#' Append Rbuildignore
 #'
-#' For optional arguments defined via `...`, return only named arguments.
+#' Add pattern to .Rbuildignore file
 #'
-#' @param ... optional arguments
-#'
-#' @noRd
-.named_attribs_only <- function(...) {
-    list(...)[names(list(...)) != ""]
-}
-
-
-#' Validate File Path
-#'
-#' Confirm that the file exists
-#'
-#' @param path a file path to validate
+#' @param pattern pattern to ignore
 #'
 #' @noRd
-.validate__file <- function(path) {
-    if (!file.exists(path)) {
-        msg <- paste0("File '", path, "' does not exist")
-        cli::cli_alert_danger(msg)
+.append__rbuild <- function(pattern) {
+    r <- readLines(".Rbuildignore", warn = FALSE)
+    if (length(r[r == pattern]) == 0) {
+        r <- c(r, pattern)
+        write(
+            x = r,
+            file = ".Rbuildignore",
+            sep = "\n"
+        )
+        cli::cli_alert_success(
+            paste0("Added '", pattern, "' to '.Rbuildignore'")
+        )
     }
 }
 
@@ -31,24 +27,33 @@
 #'
 #' @noRd
 .write__json <- function(path, version) {
-    .validate__file(path)
+    if (file.exists(path)) {
+        json <- jsonlite::read_json(path)
+        if (is.null(json$version)) {
+            cli::cli_alert_info(
+                paste0(
+                    "Added missing property 'version' to '",
+                    path, "'"
+                )
+            )
+        }
 
-    # read and warn if version property is missing
-    json <- jsonlite::read_json(path)
-    if (is.null(json$version)) {
-        cli::cli_alert_warning("Adding missing property 'version'")
+        json$version <- as.character(version)
+
+        # save and confirm
+        jsonlite::write_json(
+            x = json,
+            path = path,
+            pretty = TRUE,
+            auto_unbox = TRUE
+        )
+        cli::cli_alert_success("Updated version number in 'package.json'")
+
+    } else {
+        cli::cli_alert_danger(
+            paste0("File '", path, "'", "does not exist.")
+        )
     }
-
-    json$version <- as.character(version)
-
-    # save and confirm
-    jsonlite::write_json(
-        x = json,
-        path = path,
-        pretty = TRUE,
-        auto_unbox = TRUE
-    )
-    cli::cli_alert_success("Updated version number in 'package.json'")
 
 }
 
@@ -62,14 +67,20 @@
 #'
 #' @noRd
 .write__description <- function(path, version, patterns) {
-    .validate__file(path)
+    if (file.exists(path)) {
+        desc <- readLines(path, warn = FALSE)
+        desc[grepl(pattern = patterns, x = desc)] <- paste0(
+            "Version: ", version
+        )
 
-    desc <- readLines(path, warn = FALSE)
-    desc[grepl(pattern = patterns, x = desc)] <- paste0("Version: ", version)
-
-    # save and confirm
-    writeLines(desc, path)
-    cli::cli_alert_success("Updated version number in 'DESCRIPTION'")
+        # save and confirm
+        writeLines(desc, path)
+        cli::cli_alert_success("Updated version number in 'DESCRIPTION'")
+    } else {
+        cli::cli_alert_danger(
+            paste0("File '", path, "'", "does not exist.")
+        )
+    }
 }
 
 #' Update R files
@@ -85,20 +96,24 @@
 #'
 #' @noRd
 .write__r <- function(path, version, patterns) {
-    .validate__file(path)
+    if (file.exists(path)) {
+        r <- readLines(path, warn = FALSE)
+        r <- sapply(seq_len(length(r)), function(l) {
+            stringr::str_replace_all(
+                string = r[l],
+                pattern = patterns,
+                replacement = paste0("version = \"", version, "\"")
+            )
+        })
 
-    r <- readLines(path, warn = FALSE)
-    r <- sapply(seq_len(length(r)), function(l) {
-        stringr::str_replace_all(
-            string = r[l],
-            pattern = patterns,
-            replacement = paste0("version = \"", version, "\"")
+        # save and confirm
+        writeLines(r, path)
+        cli::cli_alert_success(
+            paste0("Updated version number in '", path, "'")
         )
-    })
-
-    # save and confirm
-    writeLines(r, path)
-    cli::cli_alert_success(
-        paste0("Updated version number in '", path, "'")
-    )
+    } else {
+        cli::cli_alert_danger(
+            paste0("File '", path, "'", "does not exist.")
+        )
+    }
 }

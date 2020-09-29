@@ -2,3 +2,4 @@
 ^dev$
 ^\.github$
 ^\.pkgbump\.json$
+^package\.json$

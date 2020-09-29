@@ -15,14 +15,14 @@
             sep = "\n"
         )
         cli::cli_alert_success(
-            paste0("Added '", pattern, "' to '.Rbuildignore'")
+            "Added {.val {pattern}} to {.file .Rbuildignore}"
         )
     }
 }
 
 #' Write json files
 #'
-#' @param path file path to package.json file
+#' @param path file path to .json file
 #' @param version version number to write
 #'
 #' @noRd
@@ -31,10 +31,7 @@
         json <- jsonlite::read_json(path)
         if (is.null(json$version)) {
             cli::cli_alert_info(
-                paste0(
-                    "Added missing property 'version' to '",
-                    path, "'"
-                )
+                "Added missing property {.val version} to {.file {path}}"
             )
         }
 
@@ -47,14 +44,12 @@
             pretty = TRUE,
             auto_unbox = TRUE
         )
-        cli::cli_alert_success("Updated version number in 'package.json'")
-
-    } else {
-        cli::cli_alert_danger(
-            paste0("File '", path, "'", "does not exist.")
+        cli::cli_alert_success(
+            "Updated version number in {.file {path}}"
         )
+    } else {
+        cli::cli_alert_danger("Error: {.file {path}} does not exist")
     }
-
 }
 
 #' Update DESCRIPTION file
@@ -75,11 +70,9 @@
 
         # save and confirm
         writeLines(desc, path)
-        cli::cli_alert_success("Updated version number in 'DESCRIPTION'")
+        cli::cli_alert_success("Updated version number in {.file {path}}")
     } else {
-        cli::cli_alert_danger(
-            paste0("File '", path, "'", "does not exist.")
-        )
+        cli::cli_alert_danger("Error: {.file {path}} does not exist")
     }
 }
 
@@ -107,13 +100,9 @@
         })
 
         # save and confirm
+        cli::cli_alert_success("Updated version number in {.file {path}}")
         writeLines(r, path)
-        cli::cli_alert_success(
-            paste0("Updated version number in '", path, "'")
-        )
     } else {
-        cli::cli_alert_danger(
-            paste0("File '", path, "'", "does not exist.")
-        )
+        cli::cli_alert_danger("Error: {.file {path}} does not exist")
     }
 }

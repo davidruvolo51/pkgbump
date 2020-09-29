@@ -8,7 +8,7 @@ A quick and dirty way to update a package's version number across internal files
 
 ## Install
 
-Install this package using `devtools`.
+Install this package using `devtools` or `remotes`.
 
 ```r
 devtools::install_github("davidruvolo51/pkgbump")

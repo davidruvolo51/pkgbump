@@ -17,44 +17,42 @@
 #' @export
 pkgbump <- function(version) {
 
-    response <- file.exists(".pkgbump.json")
+    f <- ".pkgbump.json"
+    response <- file.exists(f)
 
     if (!response) {
-        cli::cli_alert_warning(
-            paste0(
-                "Unable to locate pkgbump configuration file",
-                " '.pkgbump.json'. Do you run 'set_pkgbump()'?"
-            )
+        cli::cli_alert_danger(
+            "Error: Unable to locate configuration file {.file {f}}."
         )
     }
 
     if (response) {
-        d <- jsonlite::read_json(".pkgbump.json")
-        d$files <- as.character(d$files)
-        for (i in seq_len(length(d$files))) {
+        d <- jsonlite::read_json(f)
+        d$config$paths <- as.character(d$config$paths)
+        for (i in seq_len(length(d$config$paths))) {
 
             # description file
-            if (d$files[i] == "DESCRIPTION") {
+            if (d$config$paths[i] == "DESCRIPTION") {
                 .write__description(
-                    path = d$files[i],
+                    path = d$config$paths[i],
                     version = version,
-                    patterns = d$patterns$DESCRIPTION
+                    patterns = d$config$patterns$DESCRIPTION
                 )
             }
 
             # R files (e.g., .R or .r)
-            if (grepl(pattern = ".R", x = d$files[i], fixed = TRUE)) {
+            if (grepl(pattern = ".R", x = d$config$paths[i], fixed = TRUE)) {
                 .write__r(
-                    path = d$files[i],
+                    path = d$config$paths[i],
                     version = version,
-                    patterns = d$patterns$R
+                    patterns = d$config$patterns$R
                 )
             }
 
             # .json files (e.g., "package.json")
-            if (grepl(pattern = ".json", x = d$files[i], fixed  = TRUE)) {
+            if (grepl(pattern = ".json", x = d$config$paths[i], fixed  = TRUE)) {
                 .write__json(
-                    path = d$files[i],
+                    path = d$config$paths[i],
                     version = version
                 )
             }

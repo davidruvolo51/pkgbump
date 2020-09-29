@@ -14,7 +14,7 @@ some_function <- function(version) {
     print(version)
 }
 
-some_function(version = "0.0.13")
+some_function(version = "0.0.2")
 
 
 #' Test inside GOLEM app_server
@@ -23,8 +23,8 @@ some_function(version = "0.0.13")
 #'
 #' @noRd
 app_server <- function(input, output, session) {
-    d <- analytics$new(version = "0.0.13")
+    d <- analytics$new(version = "0.0.2")
     observe({
-        print(version = "0.0.13")
+        print(version = "0.0.2")
     })
 }

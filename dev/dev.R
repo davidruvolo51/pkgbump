@@ -2,7 +2,7 @@
 #' FILE: dev.R
 #' AUTHOR: David Ruvolo
 #' CREATED: 2020-08-17
-#' MODIFIED: 2020-08-26
+#' MODIFIED: 2020-09-29
 #' PURPOSE: package management
 #' STATUS: ongoing
 #' PACKAGES: usethis; devtools; pkgbump
@@ -19,7 +19,8 @@ usethis::use_build_ignore(
     files = c(
         "pkgbump.code-workspace",
         "dev",
-        ".pkgbump.json"
+        ".pkgbump.json",
+        "package.json"
     )
 )
 
@@ -40,9 +41,11 @@ set_pkgbump(
     files = c(
         "DESCRIPTION",     # manage DESCRIPTION file
         "package.json",    # useful for shields.io
-        "dev/test_file.R"  # this file is for testing purposes only
+        "dev/test_file.R", # this file is for testing purposes only
+        "R/set_pkgbump.R"  # update version in config json
+
     )
 )
 
 # set version number
-pkgbump(version = "0.0.13")
+pkgbump(version = "0.0.2")

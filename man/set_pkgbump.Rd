@@ -4,12 +4,12 @@
 \alias{set_pkgbump}
 \title{Set Package Files to Manage}
 \usage{
-set_pkgbump(files, patterns = NULL)
+set_pkgbump(files, r_patterns = NULL)
 }
 \arguments{
 \item{files}{an array of full file paths}
 
-\item{patterns}{define your own search patterns}
+\item{r_patterns}{a string containing search patterns for R files (optional)}
 }
 \description{
 Use this function to define the files that should be incremented. Use

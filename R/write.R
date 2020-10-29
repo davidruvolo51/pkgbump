@@ -2,7 +2,7 @@
 #'
 #' Methods for writing version numbers to file
 #'
-#' @export
+#' @noRd
 pbwrite <- structure(list(), class = "pbwrite")
 
 
@@ -13,7 +13,7 @@ pbwrite <- structure(list(), class = "pbwrite")
 #' @param path path to file
 #' @param version string containing the new version number
 #'
-#' @export
+#' @noRd
 pbwrite$json <- function(path, version) {
     status <- file.exists(path)
 
@@ -53,7 +53,7 @@ pbwrite$json <- function(path, version) {
 #' @param version string containing the new version number
 #' @param patterns search patterns
 #'
-#' @export
+#' @noRd
 pbwrite$description <- function(path, version, patterns) {
     status <- file.exists(path)
     if (!status) cli::cli_alert_danger("{.file {path}} does not exist")

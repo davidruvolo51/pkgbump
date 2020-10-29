@@ -16,65 +16,52 @@
 #'
 #' @export
 set_pkgbump <- function(files, r_patterns = NULL) {
+    f <- pbconfig$filename
+    status <- file.exists(f)
 
-    # when config exists
-    f <- ".pkgbump.json"
-    if (file.exists(f)) {
-        cli::cli_alert_success("Updated {.pkg pkgbump} configuration")
+    if (status) {
         c <- jsonlite::read_json(f)
+        cli::cli_alert_success("Updated {.pkg pkgbump} configuration")
         c$timestamps$updated <- Sys.time()
         c$config$files <- length(files)
         c$config$paths <- files
-    } else {
+    }
 
+    if (!status) {
         cli::cli_alert_success("Created {.file {f}}")
         file.create(f)
-
-        # create json
-        c <- list(
-            name = "pkgbump",
-            version = "0.0.2",
-            description = "config file for version number management",
-            timestamps = list(
-                created = Sys.time(),
-                updated = Sys.time()
-            ),
-            config = list(
-                files = length(files),
-                paths = files
-            )
-        )
+        c <- pbconfig$new_config(files = files)
     }
 
     # append to buildignore if present
     if (file.exists(".Rbuildignore")) {
-        .append__rbuild(pattern = "^\\.pkgbump\\.json$")
+        pbconfig$ignore_config()
     }
 
 
-    # set patterns (either default or user specified)
-    c$config$patterns <- list(
-        R = "version = .\\d+.\\d+.\\d+.|version=.\\d+.\\d+.\\d+.",
-        DESCRIPTION = "Version:"
-    )
+    # append R patterns if applicable
     if (!is.null(r_patterns)) {
         if (!is.character(r_patterns)) {
-            cli::cli_alert_warning("Error: R patterns must be a string")
+            cli::cli_alert_danger("{.arg patterns} must be a string")
         } else if (length(r_patterns) > 1) {
-            cli::cli_alert_warning(
-                "Error: More than 1 R pattern entered. Input should be a string"
-            )
+            cli::cli_alert_danger("{.arg patterns} must be a string")
         } else {
             c$patterns$R <- r_patterns
         }
     }
 
     # save and confirm
-    jsonlite::write_json(
-        x = c,
-        path = f,
-        pretty = TRUE,
-        auto_unbox = TRUE
-    )
-    cli::cli_alert_success("Saved {.file {f}}")
+    tryCatch({
+        jsonlite::write_json(
+            x = c,
+            path = f,
+            pretty = TRUE,
+            auto_unbox = TRUE
+        )
+        cli::cli_alert_success("Saved {.file {f}}")
+    }, error = function(e) {
+        cli::cli_alert_danger("Failed to update {.file {f}}: {e}")
+    }, warning = function(w) {
+        cli::cli_alert_danger("Failed to update {.file {f}}: {w}")
+    })
 }

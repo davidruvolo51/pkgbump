@@ -1,11 +1,11 @@
 Package: pkgbump
 Title: Increment version numbers in package files
-Version: 0.0.2
+Version: 0.0.3
 Authors@R: 
     person(given = "David",
            family = "Ruvolo",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
+           email = "dcruvolo@gmail.com",
            comment = c(ORCID = "0000-0002-5745-5298"))
 Description: Increment package version numbers in the R Description file, package.json, and any use_* files located in the R directory. The primary function `update_pkg_version` is currently suited for Shiny package development, but will be updated in the future.
 License: MIT + file LICENSE
@@ -14,6 +14,6 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Imports: 
-    cli,
-    jsonlite,
-    stringr
+    cli (>= 2.1.0),
+    jsonlite (>= 1.7.1),
+    stringr (>= 1.4.0)

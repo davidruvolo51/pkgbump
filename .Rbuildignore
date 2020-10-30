@@ -1,5 +1,6 @@
 ^pkgbump\.code-workspace$
 ^dev$
 ^\.github$
-^\.pkgbump\.json$
 ^package\.json$
+^pkgbump\.config\.json$
+^\.pkgbump\.json$

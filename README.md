@@ -1,5 +1,6 @@
 <!-- badges: start --->
 ![version](https://img.shields.io/github/package-json/v/davidruvolo51/pkgbump/prod)
+[![R build status](https://github.com/davidruvolo51/pkgbump/workflows/R-CMD-check/badge.svg)](https://github.com/davidruvolo51/pkgbump/actions)
 <!-- badges: end --->
 
 # pkgbump
@@ -8,10 +9,10 @@ A quick and dirty way to update a package's version number across internal files
 
 ## Install
 
-Install this package using `devtools` or `remotes`.
+At the moment, `pkgbump` is not available CRAN. Instead, you can install the latest release using the `devtools` or `remotes` packages.
 
 ```r
-devtools::install_github("davidruvolo51/pkgbump")
+remotes::install_github("davidruvolo51/pkgbump@*release")
 ```
 
 ## Use

@@ -19,7 +19,7 @@ DESCRIPTION).
 }
 \examples{
 \dontrun{
-  set_pkgbump(files = c("package.json", "DESCRIPTION"))
+set_pkgbump(files = c("package.json", "DESCRIPTION"))
 }
 
 }

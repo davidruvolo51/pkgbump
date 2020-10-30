@@ -16,24 +16,19 @@
 #'
 #' @export
 pkgbump <- function(version) {
+    f <- pbconfig$filename
+    status <- file.exists(f)
 
-    f <- ".pkgbump.json"
-    response <- file.exists(f)
+    if (!status) cli::cli_alert_danger("Unable to locate {.file {f}}.")
 
-    if (!response) {
-        cli::cli_alert_danger(
-            "Error: Unable to locate configuration file {.file {f}}."
-        )
-    }
-
-    if (response) {
+    if (status) {
         d <- jsonlite::read_json(f)
         d$config$paths <- as.character(d$config$paths)
         for (i in seq_len(length(d$config$paths))) {
 
             # description file
             if (d$config$paths[i] == "DESCRIPTION") {
-                .write__description(
+                pbwrite$description(
                     path = d$config$paths[i],
                     version = version,
                     patterns = d$config$patterns$DESCRIPTION
@@ -42,7 +37,7 @@ pkgbump <- function(version) {
 
             # R files (e.g., .R or .r)
             if (grepl(pattern = ".R", x = d$config$paths[i], fixed = TRUE)) {
-                .write__r(
+                pbwrite$r(
                     path = d$config$paths[i],
                     version = version,
                     patterns = d$config$patterns$R
@@ -51,7 +46,7 @@ pkgbump <- function(version) {
 
             # .json files (e.g., "package.json")
             if (grepl(pattern = ".json", x = d$config$paths[i], fixed  = TRUE)) {
-                .write__json(
+                pbwrite$json(
                     path = d$config$paths[i],
                     version = version
                 )

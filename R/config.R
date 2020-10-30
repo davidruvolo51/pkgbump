@@ -68,9 +68,4 @@ pbconfig$ignore_config <- function(pattern = "^\\.pkgbump\\.json$") {
             )
         })
     }
-    if (length(r[r == pattern]) > 0) {
-        cli::cli_alert_info(
-            "{.val {pattern}} is already present in {.file .Rbuildignore}"
-        )
-    }
 }

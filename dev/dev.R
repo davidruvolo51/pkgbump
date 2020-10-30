@@ -36,6 +36,7 @@ devtools::check()
 # use pkgbump to manage pkg's version numbers
 detach("package:pkgbump")
 rm(list = ls())
+system("rm -f pkgbump.config.json")
 devtools::load_all()
 
 set_pkgbump(
@@ -44,7 +45,8 @@ set_pkgbump(
         "package.json",    # useful for shields.io
         "dev/test_file.R", # this file is for testing purposes only
         "R/set_pkgbump.R", # update version in config json
-        "R/config.R"       # internal version management for config file
+        "R/config.R"#,       # internal version management for config file
+        # "pkgbump.config.json"
     )
 )
 

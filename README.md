@@ -1,6 +1,7 @@
 <!-- badges: start --->
 ![version](https://img.shields.io/github/package-json/v/davidruvolo51/pkgbump/prod)
 [![R build status](https://github.com/davidruvolo51/pkgbump/workflows/R-CMD-check/badge.svg)](https://github.com/davidruvolo51/pkgbump/actions)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end --->
 
 # pkgbump
@@ -46,3 +47,10 @@ pkgbump::set_pkgbump(
 ```
 
 I would recommend creating a package management script in the `dev` directory (see the `dev` directory of this project for an example) and writing the `pkgbump` configuration in that file.
+
+## To Do
+
+- [ ] Detect outdated config files and rebuild
+- [ ] Refactor `write` function
+- [ ] Refactor `set_pkgbump` function
+- [ ] Refactor config file contents and fix timestamps
